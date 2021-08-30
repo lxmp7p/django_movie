@@ -32,7 +32,9 @@
                     <li style="list-style: none">
                                     <span><b>Режиссер:</b>
                                         {% for director in movie.directors.all %}
-                                            {{ director.name }}
+                                            <a href="{% url 'actor_detail' director.name %}">
+                                                {{ director.name }}
+                                            </a>
                                         {% endfor %}
                                     </span>
                     </li>
