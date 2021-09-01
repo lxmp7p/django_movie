@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
 from django.views.generic import ListView, DetailView
@@ -43,3 +44,12 @@ class ActorView(GenreYear, DetailView):
     model = Actor
     template_name = "movies/actor.html"
     slug_field = "name"
+
+class FilterMoviesView(GenreYear, ListView):
+    """Фильтр фильмов"""
+    def get_queryset(self):
+        queryset = Movie.objects.filter(
+            Q(year__in=self.request.GET.getlist("year")) |
+            Q(genres__in=self.request.GET.getlist("genre"))
+        )
+        return queryset
